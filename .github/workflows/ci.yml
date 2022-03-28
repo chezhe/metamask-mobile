@@ -9,10 +9,20 @@ jobs:
         with:
           node-version: 14
       - run: yarn setup
+      - uses: actions/cache@v2
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}
   lint:
     runs-on: ubuntu-20.04
     needs: setup
     steps:
+      - uses: actions/cache@v2
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
